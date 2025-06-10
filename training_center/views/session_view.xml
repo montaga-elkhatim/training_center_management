@@ -1,0 +1,55 @@
+<odoo>
+
+    <record id="session_view_form" model="ir.ui.view">
+        <field name="name">session.view.form</field>
+        <field name="model">session</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>                      
+                    <group string=" session info">
+                        <field name="session_name" /> 
+                        <field name="session_course" /> 
+                        <field name="session_presenter" /> 
+                        <field name="session_room" />  
+                        <field name="session_date" /> 
+                    </group> 
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="session_view_tree" model="ir.ui.view">
+        <field name="name">session.view.tree</field>
+        <field name="model">session</field>
+        <field name="arch" type="xml">
+            <list >
+                <field name="session_name" /> 
+                <field name="session_course" /> 
+                <field name="session_presenter" /> 
+                <field name="session_room" />  
+                <field name="session_date" /> 
+            </list>
+        </field>
+    </record>
+
+    <record id="session_view_search" model="ir.ui.view">
+        <field name="name">session.view.search</field>
+        <field name="model">session</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="session_name" /> 
+                <field name="session_course" /> 
+                <field name="session_presenter" /> 
+                <field name="session_date" /> 
+             </search>
+        </field>
+    </record>
+
+    <record id="session_action" model="ir.actions.act_window">
+        <field name="name">session</field>
+        <field name="res_model">session</field>         
+    </record> 
+
+    <menuitem id="session_items_menu" name="Sessions" action="session_action" sequence="5" parent="center_view_root_menu"/>
+
+</odoo>

@@ -1,0 +1,19 @@
+.back{
+    border-radius: 10px;
+
+}
+.fontee_size{
+    font-size: large;
+}
+.course_img img{
+    width: 100% !important;
+    height: 200px !important;
+    border-radius: 20px !important;
+}
+.course_card{ 
+    border-radius: 20px;
+}
+.card_size_font{
+    font-size: medium;
+    font-family: title;
+}

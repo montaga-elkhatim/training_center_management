@@ -1,0 +1,187 @@
+<odoo>
+
+    <record id="course_view_form" model="ir.ui.view">
+        <field name="name">course.view.form</field>
+        <field name="model">course</field>
+        <field name="arch" type="xml">
+            <form string="Student" >
+                <sheet >
+                    <!-- <div style="text-align: center;">
+                        <button string="Owner" icon="fa-user" name="get_owner_action" type="object" invisible="not owner_id" class="btn-primary"  />
+                    </div>
+                    <widget name="web_ribbon" title="SOLD" bg_color="text-bg-success" invisible="reg_state !='sold'" />
+                    <header invisible="reg_state = 'sold'"> 
+                        <button string="Available" name="course_available_action" invisible="reg_state = 'available'" type="object" class="btn-primary"  />
+                        <button string="Rented" name="course_rented_action" type="object" invisible="reg_state = 'rented'"  class="btn-secondary"  />    
+                        <field name="reg_state" widget="statusbar" invisible="reg_state = 'sold'"/>   
+                    </header> -->
+                    <header>
+                        <field name="state" widget="statusbar" />    
+
+                    </header>
+                    <div class="oe-title">
+                    <label for="name"/>
+                        <h2><field name="name" style="font-family='title';" /></h2> 
+                    </div> 
+                    
+                    <field name="image" widget="image" class="oe_avatar" />      
+                    <group >
+                        <group string=" base info" > 
+                            <field name="department_type"  /> 
+                            <field name="price"  placeholder="e.g. 1000 "/>  
+                            <field name="presenter_id" />
+                            <field name="room_id"  />
+                            <field name="duration_study" placeholder="e.g. 20" />
+                            <field name="duration_study_by_week" />
+                            <field name="registration_deadline" placeholder="e.g. 01/01/2025"/>
+                            <field name="start_date"  widget="date" placeholder="e.g. 01/01/2025"/>
+                            <field name="end_date" widget="date" placeholder="e.g. 01/01/2025"/>
+                            <field name="sessions" />                         
+                        </group>
+                        <group string=" aditional info">
+                            <field name="study_type" />  
+                            <field name="reg_state" />
+                            <field name="postcode" placeholder="e.g. 124232"/>
+                            <field name="batch" placeholder="e.g. 1"/>  
+                            <field name="num_seats" placeholder="e.g. 20" />
+                            <field name="reserved_seats" /> 
+                            <field name="need" placeholder="this course need knowlage by ..." />
+                            <field name="certificate" /> 
+                            <field name="description" />
+
+                        </group>
+                        <notebook>
+                            <page name="student" string="Student List">
+                                <field name="student_ids" readonly="True" />                                
+                            </page>
+                        </notebook>
+                    </group>                      
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="course_view_tree" model="ir.ui.view">
+        <field name="name">course.view.tree</field>
+        <field name="model">course</field>
+        <field name="arch" type="xml">
+            <list string="Course" >
+                <field name="name" />
+                <field name="department_type" /> 
+                <field name="price" />
+                <field name="sessions" />
+                <field name="reserved_seats" />
+                <field name="num_seats" />
+                <field name="registration_deadline" />
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="reg_state" />
+            </list>
+        </field>
+    </record>
+  
+    <record id="course_cron" model="ir.cron">
+        <field name="name">Cron course</field>
+        <field name="model_id" ref="model_course"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field> 
+        <field name="state">code</field>
+        <field name="code">
+            model.check_state()
+        </field>
+    </record> 
+    
+  <record id="course_view_search" model="ir.ui.view">
+            <field name="name">course.view.search</field>
+            <field name="model">course</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/> 
+                    <filter name="department_type" string="department_type" domain="[('department_type', '=', 'healthy')]"/>
+                    <filter name="department_type" string="department_type" domain="[('department_type', '=', 'technical')]"/>
+                    <filter name="department_type" string="department_type" domain="[('department_type', '=', 'humanskill')]"/>
+                    <filter name="department_type" string="department_type" domain="[('department_type', '=', 'languages')]"/>
+                </search>
+            </field>
+        </record>
+
+    <record id="course_view_calendar" model="ir.ui.view">
+        <field name="name">course.view.calendar</field>
+        <field name="model">course</field> 
+        <field name="arch" type="xml">
+            <calendar string="Course Calendar" date_start="start_date"  date_stop="end_date" color="name">
+                    <field name="name" />
+            </calendar>
+        </field>
+    </record>
+        
+    <record id="course_view_kanban" model="ir.ui.view">
+        <field name="name">course.view.kanban</field>
+        <field name="model">course</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <widget name="web_ribbon" title="Finished" bg_color="text-bg-success" invisible="state =='finished'" />
+                    <widget name="web_ribbon" title="In Progress" bg_color="text-bg-success" invisible="state =='in_progress'" /> 
+                    <t t-name="card" class="course_card">
+
+                        <div class="row back" > 
+                            <div >    
+                                <field name="image" widget="image" alt="course" invisible="not image" class="course_img"/>                         
+                            </div> 
+                            <div >
+                                <div  >
+                                    <h1>
+                                        <field  name="name"   />     
+                                    </h1>
+                                </div>
+                                <div>   
+                                        <strong class="card_size_font"><i  class="fa fa-fw fa-lg text-muted fa-folder-o btn-link text-dark"></i> <field name="department_type"/></strong>
+                                </div>  
+
+                                <div t-if="record.state.raw_value == 'registration'"> 
+                                    <span  class="card_size_font"><i  class="fa fa-fw fa-lg text-muted fa-clock-o btn-link text-dark"></i><field name="registration_deadline" /> </span>                                      
+                                </div>
+                               
+                                <div>
+                                    <span class="card_size_font" style="display: block ruby;"><i class="fa fa-fw fa-lg text-muted fa-calendar-o btn-link text-dark"></i><field name="start_date" /> - <field name="end_date" /></span>    
+                                </div><div>
+                                    <span>
+                                       <strong class="card_size_font"> <i  class="fa fa-fw fa-lg text-muted fa-clock-o btn-link text-dark"></i> <field name="duration_study" /> hours</strong>
+                                    </span>    
+                                </div>
+                            </div>
+                        </div>  
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>  
+
+    <record id="action_report_course" model="ir.actions.report">
+        <field name="name">courses PDF</field>
+        <field name="model">course</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">report.name</field> 
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="binding_model_id" ref="model_course"/>
+        <field name="binding_type">report</field>
+    </record> 
+    
+    <record id="course_action" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">course</field>    
+        <field name="view_mode">list,kanban,form,calendar</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No course to show
+                </p><p>
+                    Create some course to see their info in this view.
+                </p>
+        </field>    
+    </record> 
+    
+    <menuitem id="course_items_menu" name="Courses" action="course_action"  parent="center_view_root_menu" sequence="1" />
+
+</odoo>

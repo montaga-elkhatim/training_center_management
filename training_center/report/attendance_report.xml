@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_attendance" model="ir.actions.report">
+        <field name="name">Attendance Course</field>
+        <field name="model">course</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">training_center.attendance_course_pdf</field>  
+        <field name="binding_model_id" ref="model_course"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="attendance_course_pdf">
+   <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="rec">
+                <style>
+                    .body_course{
+                        padding: 0.5cm;
+                    }
+                    .center_name {
+                        padding: 10px,0px,10px,0px;
+                        text-align: center;
+                        font-style: italic;
+                        font-weight: bold;
+                        font-size: 32px;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse; 
+                    }
+                    table, th, td {
+                        border: 1px solid black; 
+                    }
+                    th, td {
+                        padding: 10px; 
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                    tr:nth-child(even) {
+                        background-color: #f9f9f9;
+                    }
+                    tr:hover {
+                        background-color: #f1f1f1;
+                    }
+                    h3{  
+                        display: inline-block;
+                        width: auto;
+                        font-weight: bold;
+                        font-size: 23px;
+                    }
+                    .center_report_head{
+                        padding: 10px,0px,10px,0px;
+                        text-align: center; 
+                        font-weight: bold;
+                        font-size: 25px;
+                    }
+                    thead th{
+                        font-weight: bold;
+                        font-size: 18px;
+                    }
+                    thead{
+                        text-align: center;
+                    }
+                </style> 
+                <div class="body_course">    
+                    <div class="center_name">
+                        <span class="h"> Faread Training Center </span>
+                    </div>
+                    <div class="center_report_head">
+                        <h2> Attendance Report </h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <h3>Course :</h3>
+                            <t t-esc="rec.name"/>
+                        </div>
+                        <div class="col-6">
+                            <h3>Department :</h3>
+                            <t t-esc="rec.department_type"/>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-6">
+                            <h3>Study Type :</h3>
+                            <t t-esc="rec.study_type"/>
+                        </div>
+                        <div class="col-6">
+                            <h3>Number of Student :</h3>
+                            <t t-esc="rec.reserved_seats"/>
+                        </div>
+                    </div>   
+                    <br/>
+                    <table  id="myTable">
+                        <thead>
+                            <h6><th>Name</th></h6>  
+                                <t t-foreach="rec.sessions" t-as="session"> 
+                                    <th><t t-esc="session+1"/></th>                                   
+                                </t> 
+                        </thead>
+                        <tbody> 
+                            <t t-foreach="rec.student_ids" t-as="student">
+                                <tr> 
+                                    <td>
+                                        <t t-esc="student_index+1"/>- <t t-esc="student.name"/>
+                                    </td>
+                                    <t t-foreach="rec.sessions" t-as="session">
+                                        <td></td>                                   
+                                    </t> 
+                                </tr>                        
+                            </t>
+                        </tbody> 
+                    </table> 
+                </div>
+            </t> 
+        </t>
+    </template>
+
+</odoo>

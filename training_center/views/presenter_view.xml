@@ -1,0 +1,62 @@
+<odoo>
+
+    <record id="presenter_view_form" model="ir.ui.view">
+        <field name="name">presenter.view.form</field>
+        <field name="model">presenter</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>  
+                    <!-- <header>
+                        <button string="Accepte" name="make_presenter_accept" type="object" class="btn-primary"  />
+                        <button string="Refused" name="make_presenter_refused" type="object" class="btn-danger"  />    
+                    </header> -->
+                    <field name="image" widget="image" class="oe_avatar" />      
+                    <group string=" presenter info">
+                        <field name="name" placeholder="Name of Presenter"/> 
+                        <field name="phone" placeholder="e.g. 0123456789" widget="phone" /> 
+                        <field name="course_ids" widget="many2many_tags"/> 
+                        <field name="email" widget="email" placeholder="e.g. test123@gmail.com"/>   
+                        <field name="biography" /> 
+                    </group> 
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="presenter_view_tree" model="ir.ui.view">
+        <field name="name">presenter.view.tree</field>
+        <field name="model">presenter</field>
+        <field name="arch" type="xml">
+            <list>     
+                <field name="name" />   
+                <field name="phone" /> 
+                <field name="course_ids" /> 
+                <field name="email" />   
+            </list>
+        </field>
+    </record>
+
+    <record id="presenter_view_search" model="ir.ui.view">
+        <field name="name">presenter.view.search</field>
+        <field name="model">presenter</field>
+        <field name="arch" type="xml">
+            <search __validate__="1">
+                <field name="name" /> 
+              </search>
+        </field>
+    </record>
+
+    <record id="presenter_action" model="ir.actions.act_window">
+        <field name="name">Presenter</field>
+        <field name="res_model">presenter</field>  
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No presenter to show
+                </p><p>
+                    Create some presenter to see their info in this view.
+                </p>
+        </field>         
+    </record> 
+
+    <menuitem  id="presenter_items_menu" name="Presenter" action="presenter_action" sequence="2" parent="center_view_root_menu"/>
+</odoo>

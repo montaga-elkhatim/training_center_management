@@ -1,0 +1,61 @@
+<odoo>
+
+    <record id="student_view_form" model="ir.ui.view">
+        <field name="name">student.view.form</field>
+        <field name="model">student</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>  
+                    <group string=" student info">
+                        <field name="name" />
+                        <field name="phone" placeholder="e.g. 0123456789 " widget="phone" />
+                        <field name="age" placeholder="e.g. 21 "/>    
+                        <field name="gender" /> 
+                        <field name="email" placeholder="e.g. test123@gmail.com "  widget="email"/>  
+                        <field name="course_ids" />  
+                    </group> 
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="student_view_tree" model="ir.ui.view">
+        <field name="name">student.view.tree</field>
+        <field name="model">student</field>
+        <field name="arch" type="xml">
+            <list >
+                <field name="name" />
+                <field name="phone" />
+                <field name="gender" />
+                <field name="age" /> 
+                <field name="email" />  
+                <field name="course_ids" />  
+            </list>
+        </field>
+    </record>
+
+    <record id="student_view_search" model="ir.ui.view">
+        <field name="name">student.view.search</field>
+        <field name="model">student</field>
+        <field name="arch" type="xml">
+            <search __validate__="1">
+                <field name="name" /> 
+             </search>
+        </field>
+    </record>
+
+    <record id="student_action" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">student</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No student to show
+                </p><p>
+                    Create some student to see their info in this view.
+                </p>
+        </field>         
+    </record> 
+
+    <menuitem id="student_items_menu" name="Student" action="student_action" sequence="3" parent="center_view_root_menu"/>
+
+</odoo>

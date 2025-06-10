@@ -1,0 +1,6 @@
+<odoo>
+    <menuitem
+        id="center_view_root_menu"
+        name="Faread Center"
+        web_icon="training_center,static/description/icon.png"/> 
+</odoo>

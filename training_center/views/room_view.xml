@@ -1,0 +1,47 @@
+<odoo>
+
+    <record id="room_view_form" model="ir.ui.view">
+        <field name="name">room.view.form</field>
+        <field name="model">room</field>
+        <field name="arch" type="xml">
+            <form >
+                <sheet > 
+                    <group >
+                        <group string=" base info" > 
+                            <field name="name"  />
+                            <field name="setting_number" />
+                            <field name="sessions_ids" />  
+                        </group>
+                    </group>                      
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="room_view_tree" model="ir.ui.view">
+        <field name="name">room.view.tree</field>
+        <field name="model">room</field>
+        <field name="arch" type="xml">
+            <list string="room" >
+                <field name="name"  />
+                <field name="setting_number" />
+                <field name="sessions_ids" />      
+            </list>
+        </field>
+    </record> 
+         <record id="room_action" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="res_model">room</field>
+        <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No rooms to show
+                </p><p>
+                    Create some rooms to see their info in this view.
+                </p>
+        </field>       
+    </record> 
+    
+    <menuitem id="room_items_menu" name="Rooms" action="room_action" sequence="4" parent="center_view_root_menu" />
+
+</odoo>
